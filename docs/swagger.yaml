@@ -1,0 +1,193 @@
+basePath: /v1
+definitions:
+  models.Banner:
+    properties:
+      id:
+        type: integer
+      image:
+        type: string
+      link:
+        type: string
+    type: object
+  models.Mentor:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      photo:
+        type: string
+    type: object
+  models.Participant:
+    properties:
+      code:
+        type: string
+      id:
+        type: integer
+      isActive:
+        type: boolean
+      mentorId:
+        type: integer
+      name:
+        type: string
+      photoUrl:
+        type: string
+      voteCount:
+        type: integer
+    type: object
+  models.UserVotes:
+    properties:
+      isWinner:
+        type: boolean
+      participantId:
+        type: integer
+      title:
+        type: string
+      votesCount:
+        type: integer
+    type: object
+  models.Voting:
+    properties:
+      description:
+        type: string
+      endedAt:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      startedAt:
+        type: string
+      winnerId:
+        type: integer
+      winnersVotesCounts:
+        type: integer
+    type: object
+  models.Voucher:
+    properties:
+      description:
+        type: string
+      icon:
+        type: string
+      id:
+        type: integer
+      isNew:
+        type: boolean
+      name:
+        type: string
+      owner_id:
+        type: integer
+    type: object
+  serializers.Base:
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+    type: object
+  serializers.UserHistory:
+    properties:
+      voted:
+        items:
+          $ref: '#/definitions/models.UserVotes'
+        type: array
+      vouchers:
+        items:
+          $ref: '#/definitions/models.Voucher'
+        type: array
+    type: object
+  serializers.Vote:
+    properties:
+      banner:
+        $ref: '#/definitions/models.Banner'
+      history:
+        $ref: '#/definitions/serializers.UserHistory'
+      lastWinner:
+        $ref: '#/definitions/models.UserVotes'
+      mentors:
+        items:
+          $ref: '#/definitions/models.Mentor'
+        type: array
+      participants:
+        items:
+          $ref: '#/definitions/models.Participant'
+        type: array
+      voting:
+        $ref: '#/definitions/models.Voting'
+    type: object
+info:
+  contact:
+    email: support@swagger.io
+    name: Snapp Voting
+    url: http://www.swagger.io/support
+  description: Snapp voting api
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Snapp Ava Voting
+  version: "1.0"
+paths:
+  /vote/{snapp_id}:
+    get:
+      parameters:
+        - description: Snapp id
+          in: path
+          name: snapp_id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/serializers.Vote'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/serializers.Base'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/serializers.Base'
+      summary: Submit user vote
+      tags:
+        - vote
+  /vote/{snapp_id}/{voting_id}/{vote_id}:
+    post:
+      parameters:
+        - description: Snapp id
+          in: path
+          name: snapp_id
+          required: true
+          type: integer
+        - description: voting id
+          in: path
+          name: voting_id
+          required: true
+          type: integer
+        - description: vote id
+          in: path
+          name: vote_id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/serializers.Vote'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/serializers.Base'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/serializers.Base'
+      summary: Submit user vote
+      tags:
+        - vote
+swagger: "2.0"

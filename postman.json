@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "5cb932ac-8d43-4a8d-80f8-ef459069cad5",
+		"name": "SnappBack",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Submit",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/v1/vote/:snapp_id/:voting_id/:vote_id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1",
+						"vote",
+						":snapp_id",
+						":voting_id",
+						":vote_id"
+					],
+					"variable": [
+						{
+							"key": "snapp_id",
+							"value": "test"
+						},
+						{
+							"key": "voting_id",
+							"value": "1"
+						},
+						{
+							"key": "vote_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "vote",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/v1/vote/:snapp_id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1",
+						"vote",
+						":snapp_id"
+					],
+					"variable": [
+						{
+							"key": "snapp_id",
+							"value": "test"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "127.0.0.1:8080",
+			"type": "string"
+		}
+	]
+}

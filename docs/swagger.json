@@ -1,0 +1,294 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Snapp voting api",
+    "title": "Snapp Voting",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "name": "Parsa Voting Project ",
+      "url": "http://www.swagger.io/support",
+      "email": "support@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0"
+  },
+  "basePath": "/v1",
+  "paths": {
+    "/vote/{snapp_id}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "vote"
+        ],
+        "summary": "Submit user vote",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Snapp id",
+            "name": "snapp_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/serializers.Vote"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/serializers.Base"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/serializers.Base"
+            }
+          }
+        }
+      }
+    },
+    "/vote/{snapp_id}/{voting_id}/{vote_id}": {
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "vote"
+        ],
+        "summary": "Submit user vote",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Snapp id",
+            "name": "snapp_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "voting id",
+            "name": "voting_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "vote id",
+            "name": "vote_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/serializers.Vote"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/serializers.Base"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/serializers.Base"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "models.Banner": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "image": {
+          "type": "string"
+        },
+        "link": {
+          "type": "string"
+        }
+      }
+    },
+    "models.Mentor": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "photo": {
+          "type": "string"
+        }
+      }
+    },
+    "models.Participant": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "mentorId": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "photoUrl": {
+          "type": "string"
+        },
+        "voteCount": {
+          "type": "integer"
+        }
+      }
+    },
+    "models.UserVotes": {
+      "type": "object",
+      "properties": {
+        "isWinner": {
+          "type": "boolean"
+        },
+        "participantId": {
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "votesCount": {
+          "type": "integer"
+        }
+      }
+    },
+    "models.Voting": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "endedAt": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "startedAt": {
+          "type": "string"
+        },
+        "winnerId": {
+          "type": "integer"
+        },
+        "winnersVotesCounts": {
+          "type": "integer"
+        }
+      }
+    },
+    "models.Voucher": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "icon": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "isNew": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
+        },
+        "owner_id": {
+          "type": "integer"
+        }
+      }
+    },
+    "serializers.Base": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "serializers.UserHistory": {
+      "type": "object",
+      "properties": {
+        "voted": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/models.UserVotes"
+          }
+        },
+        "vouchers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/models.Voucher"
+          }
+        }
+      }
+    },
+    "serializers.Vote": {
+      "type": "object",
+      "properties": {
+        "banner": {
+          "$ref": "#/definitions/models.Banner"
+        },
+        "history": {
+          "$ref": "#/definitions/serializers.UserHistory"
+        },
+        "lastWinner": {
+          "$ref": "#/definitions/models.UserVotes"
+        },
+        "mentors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/models.Mentor"
+          }
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/models.Participant"
+          }
+        },
+        "voting": {
+          "$ref": "#/definitions/models.Voting"
+        }
+      }
+    }
+  }
+}
